@@ -6,11 +6,11 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C5FAC72B-4F1D-4D99-AEFA-63B58DEB704B}</ProjectGuid>
+    <ProjectGuid>{02074D86-9167-481C-BA74-5A7A45A6F1B0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LearningMVCAppln.Tests</RootNamespace>
-    <AssemblyName>LearningMVCAppln.Tests</AssemblyName>
+    <RootNamespace>LearningMVCWithEF.Tests</RootNamespace>
+    <AssemblyName>LearningMVCWithEF.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -92,9 +92,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LearningMVCAppln\LearningMVCAppln.csproj">
-      <Project>{3495F237-E78A-4421-9088-6BD8426C046D}</Project>
-      <Name>LearningMVCAppln</Name>
+    <ProjectReference Include="..\LearningMVCWithEF\LearningMVCWithEF.csproj">
+      <Project>{45BA1590-3DB4-4E38-AA4C-37BCC6C184A2}</Project>
+      <Name>LearningMVCWithEF</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
