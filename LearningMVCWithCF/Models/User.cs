@@ -20,6 +20,8 @@ namespace LearningMVCWithCF.Models
         public string PhoneNo { get; set; }
         public string Company { get; set; }
         public string Designation { get; set; }
+        public string Salary { get; set; }
+
         #endregion
     }
     #endregion
