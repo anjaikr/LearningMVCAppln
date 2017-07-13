@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningMVCAppln", "LearningMVCAppln\LearningMVCAppln.csproj", "{3495F237-E78A-4421-9088-6BD8426C046D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningMVCAppln.Tests", "LearningMVCAppln.Tests\LearningMVCAppln.Tests.csproj", "{C5FAC72B-4F1D-4D99-AEFA-63B58DEB704B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3495F237-E78A-4421-9088-6BD8426C046D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3495F237-E78A-4421-9088-6BD8426C046D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3495F237-E78A-4421-9088-6BD8426C046D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3495F237-E78A-4421-9088-6BD8426C046D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5FAC72B-4F1D-4D99-AEFA-63B58DEB704B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5FAC72B-4F1D-4D99-AEFA-63B58DEB704B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5FAC72B-4F1D-4D99-AEFA-63B58DEB704B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5FAC72B-4F1D-4D99-AEFA-63B58DEB704B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
