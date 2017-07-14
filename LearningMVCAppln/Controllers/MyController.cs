@@ -316,6 +316,7 @@ namespace LearningMVCAppln.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [HttpGet]
         public ActionResult Edit(int? id)
         {
             Mapper.CreateMap<LearningMVCAppln.User, LearningMVCAppln.Models.User>();
@@ -336,6 +337,7 @@ namespace LearningMVCAppln.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult Edit(int? id, LearningMVCAppln.Models.User userDetails)
+        //public ActionResult Edit(int? id)
         {
             TempData["TempData Name"] = "Akhil";
 
@@ -362,6 +364,24 @@ namespace LearningMVCAppln.Controllers
             {
                 return View();
             }
+
+
+            //try
+            //{
+            //    Mapper.CreateMap<LearningMVCAppln.Models.User, LearningMVCAppln.User>();
+            //    using (var dbContext = new MyDataContext())
+            //    {
+            //        var userDetails1 = dbContext.Users.FirstOrDefault(userId => userId.UserId == id);
+            //        var user = Mapper.Map<LearningMVCAppln.Models.User, LearningMVCAppln.User>(userDetails);
+            //        //dbContext.Users.InsertOnSubmit(user);
+            //        dbContext.SubmitChanges();
+            //        return RedirectToAction(nameof(Index));
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    return View();
+            //}
         }
         #endregion
 
