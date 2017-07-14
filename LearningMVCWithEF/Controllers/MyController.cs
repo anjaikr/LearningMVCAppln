@@ -1,14 +1,29 @@
 ﻿using LearningMVCWithEF;
+using LearningMVCWithEF.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace LearningMVCWithEFWithEF.Controllers
+namespace LearningMVCWithEF.Controllers
 {
     public class MyController : Controller
     {
+        #region Private member variables...
+        private IUserRepository userRepository;
+        #endregion
+
+        #region Public Constructor...
+        /// <summary>
+        /// Public Controller to initialize User Repository
+        /// </summary>
+        public MyController()
+        {
+            this.userRepository = new UserRepository(new MVCEntities());
+        }
+        #endregion
+
         #region Display...
         /// <summary>
         /// Get Action for index
@@ -16,25 +31,22 @@ namespace LearningMVCWithEFWithEF.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            using (var dbContext = new MVCEntities())
+            var userList = from user in userRepository.GetUsers() select user;
+            var users = new List<Models.UserList>();
+            if (userList.Any())
             {
-                var userList = from user in dbContext.Users select user;
-                var users = new List<LearningMVCWithEF.Models.UserList>();
-                if (userList.Any())
+                foreach (var user in userList)
                 {
-                    foreach (var user in userList)
-                    {
-                        users.Add(new LearningMVCWithEF.Models.UserList() { UserId = user.UserId, Address = user.Address, Company = user.Company, FirstName = user.FirstName, LastName = user.LastName, Designation = user.Designation, EMail = user.EMail, PhoneNo = user.PhoneNo });
-                    }
+                    users.Add(new LearningMVCWithEF.Models.UserList() { UserId = user.UserId, Address = user.Address, Company = user.Company, FirstName = user.FirstName, LastName = user.LastName, Designation = user.Designation, EMail = user.EMail, PhoneNo = user.PhoneNo });
                 }
-                ViewBag.FirstName = "My First Name";
-                ViewData["FirstName"] = "My First Name";
-                if (TempData.Any())
-                {
-                    var tempData = TempData["TempData Name"];
-                }
-                return View(users);
             }
+            ViewBag.FirstName = "My First Name";
+            ViewData["FirstName"] = "My First Name";
+            if (TempData.Any())
+            {
+                var tempData = TempData["TempData Name"];
+            }
+            return View(users);
         }
 
         /// <summary>
@@ -42,25 +54,22 @@ namespace LearningMVCWithEFWithEF.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            using (var dbContext = new MVCEntities())
+            var userDetails = userRepository.GetUserByID(id);
+            var user = new LearningMVCWithEF.Models.UserList();
+            if (userDetails != null)
             {
-                var userDetails = dbContext.Users.FirstOrDefault(userId => userId.UserId == id);
-                var user = new LearningMVCWithEF.Models.UserList();
-                if (userDetails != null)
-                {
-                    user.UserId = userDetails.UserId;
-                    user.FirstName = userDetails.FirstName;
-                    user.LastName = userDetails.LastName;
-                    user.Address = userDetails.Address;
-                    user.PhoneNo = userDetails.PhoneNo;
-                    user.EMail = userDetails.EMail;
-                    user.Company = userDetails.Company;
-                    user.Designation = userDetails.Designation;
-                }
-                return View(user);
+                user.UserId = userDetails.UserId;
+                user.FirstName = userDetails.FirstName;
+                user.LastName = userDetails.LastName;
+                user.Address = userDetails.Address;
+                user.PhoneNo = userDetails.PhoneNo;
+                user.EMail = userDetails.EMail;
+                user.Company = userDetails.Company;
+                user.Designation = userDetails.Designation;
             }
+            return View(user);
         }
         #endregion
 
@@ -84,24 +93,21 @@ namespace LearningMVCWithEFWithEF.Controllers
         {
             try
             {
-                using (var dbContext = new MVCEntities())
+                var user = new User();
+                if (userDetails != null)
                 {
-                    var user = new User();
-                    if (userDetails != null)
-                    {
-                        user.UserId = userDetails.UserId;
-                        user.FirstName = userDetails.FirstName;
-                        user.LastName = userDetails.LastName;
-                        user.Address = userDetails.Address;
-                        user.PhoneNo = userDetails.PhoneNo;
-                        user.EMail = userDetails.EMail;
-                        user.Company = userDetails.Company;
-                        user.Designation = userDetails.Designation;
-                    }
-                    dbContext.Users.Add(user);
-                    dbContext.SaveChanges();
-                    return RedirectToAction(nameof(Index));
+                    user.UserId = userDetails.UserId;
+                    user.FirstName = userDetails.FirstName;
+                    user.LastName = userDetails.LastName;
+                    user.Address = userDetails.Address;
+                    user.PhoneNo = userDetails.PhoneNo;
+                    user.EMail = userDetails.EMail;
+                    user.Company = userDetails.Company;
+                    user.Designation = userDetails.Designation;
                 }
+                userRepository.InsertUser(user);
+                userRepository.Save();
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -116,25 +122,22 @@ namespace LearningMVCWithEFWithEF.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            using (var dbContext = new MVCEntities())
+            var userDetails = userRepository.GetUserByID(id);
+            var user = new LearningMVCWithEF.Models.UserList();
+            if (userDetails != null)
             {
-                var userDetails = dbContext.Users.FirstOrDefault(userId => userId.UserId == id);
-                var user = new LearningMVCWithEF.Models.UserList();
-                if (userDetails != null)
-                {
-                    user.UserId = userDetails.UserId;
-                    user.FirstName = userDetails.FirstName;
-                    user.LastName = userDetails.LastName;
-                    user.Address = userDetails.Address;
-                    user.PhoneNo = userDetails.PhoneNo;
-                    user.EMail = userDetails.EMail;
-                    user.Company = userDetails.Company;
-                    user.Designation = userDetails.Designation;
-                }
-                return View(user);
+                user.UserId = userDetails.UserId;
+                user.FirstName = userDetails.FirstName;
+                user.LastName = userDetails.LastName;
+                user.Address = userDetails.Address;
+                user.PhoneNo = userDetails.PhoneNo;
+                user.EMail = userDetails.EMail;
+                user.Company = userDetails.Company;
+                user.Designation = userDetails.Designation;
             }
+            return View(user);
         }
 
         /// <summary>
@@ -145,30 +148,25 @@ namespace LearningMVCWithEFWithEF.Controllers
         /// <param name="userDetails">todo: describe userDetails parameter on Edit</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(int? id, User userDetails)
+        public ActionResult Edit(int id, User userDetails)
         {
             TempData["TempData Name"] = "Akhil";
 
             try
             {
-                using (var dbContext = new MVCEntities())
-                {
-                    var user = dbContext.Users.FirstOrDefault(userId => userId.UserId == id);
-                    if (user != null)
-                    {
-                        user.FirstName = userDetails.FirstName;
-                        user.LastName = userDetails.LastName;
-                        user.Address = userDetails.Address;
-                        user.PhoneNo = userDetails.PhoneNo;
-                        user.EMail = userDetails.EMail;
-                        user.Company = userDetails.Company;
-                        user.Designation = userDetails.Designation;
-                        dbContext.SaveChanges();
-                    }
-                    return RedirectToAction(nameof(Index));
-                }
+                var user = userRepository.GetUserByID(id);
+                user.FirstName = userDetails.FirstName;
+                user.LastName = userDetails.LastName;
+                user.Address = userDetails.Address;
+                user.PhoneNo = userDetails.PhoneNo;
+                user.EMail = userDetails.EMail;
+                user.Company = userDetails.Company;
+                user.Designation = userDetails.Designation;
+                userRepository.UpdateUser(user);
+                userRepository.Save();
+                return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View();
             }
@@ -181,24 +179,22 @@ namespace LearningMVCWithEFWithEF.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            using (var dbContext = new MVCEntities())
+            var user = new Models.UserList();
+            var userDetails = userRepository.GetUserByID(id);
+
+            if (userDetails != null)
             {
-                var user = new LearningMVCWithEF.Models.UserList();
-                var userDetails = dbContext.Users.FirstOrDefault(userId => userId.UserId == id);
-                if (userDetails != null)
-                {
-                    user.FirstName = userDetails.FirstName;
-                    user.LastName = userDetails.LastName;
-                    user.Address = userDetails.Address;
-                    user.PhoneNo = userDetails.PhoneNo;
-                    user.EMail = userDetails.EMail;
-                    user.Company = userDetails.Company;
-                    user.Designation = userDetails.Designation;
-                }
-                return View(user);
+                user.FirstName = userDetails.FirstName;
+                user.LastName = userDetails.LastName;
+                user.Address = userDetails.Address;
+                user.PhoneNo = userDetails.PhoneNo;
+                user.EMail = userDetails.EMail;
+                user.Company = userDetails.Company;
+                user.Designation = userDetails.Designation;
             }
+            return View(user);
         }
 
         /// <summary>
@@ -208,23 +204,21 @@ namespace LearningMVCWithEFWithEF.Controllers
         /// <param name="userDetails"> </param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Delete(int? id, LearningMVCWithEF.Models.UserList userDetails)
+        public ActionResult Delete(int id, Models.UserList userDetails)
         {
             try
             {
-                using (var dbContext = new MVCEntities())
-                {
-                    var user = dbContext.Users.FirstOrDefault(userId => userId.UserId == id);
-                    if (user != null)
-                    {
-                        dbContext.Users.Add(user);
-                        dbContext.SaveChanges();
-                    }
+                var user = userRepository.GetUserByID(id);
 
-                    return RedirectToAction(nameof(Index));
+                if (user != null)
+                {
+                    userRepository.DeleteUser(id);
+                    userRepository.Save();
                 }
+
+                return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View();
             }

@@ -234,6 +234,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IUserRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="User.cs">
       <DependentUpon>EFDataModel.tt</DependentUpon>
